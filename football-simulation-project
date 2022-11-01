@@ -1,3 +1,67 @@
 // Football Knockout tournament simulation project
 // My edit
 // 3rd edit
+#include<iostream>
+#include<cstring>
+using namespace std;
+class Teams{
+    public:
+ string team_name;
+public:
+    void getname(){
+    cin>>team_name;
+    }
+};
+class match:public Teams{
+public:
+    int team_score1;
+    int team_score2;
+    int matches(int i,Teams t1,Teams t2){
+
+    cout<<"enter team_score of "<<t1.team_name<<endl;
+    cin>>team_score1;
+    cout<<"enter team_score of "<<t2.team_name<<endl;
+    cin>>team_score2;
+    if(team_score1>team_score2){
+        cout<<t1.team_name<<" "<<"WINS"<<endl;
+        return i;
+    }
+    else {
+        cout<<t2.team_name<<" "<<"WINS"<<endl;
+        return i+1;
+    }
+    }
+};
+class Quaterfinal:public Teams{
+public:
+    void showmatches(Teams t1,Teams t2){
+    cout<<t1.team_name<<" "<<"v/s"<<" "<<t2.team_name<<endl;
+    }
+};
+
+int main(){
+    Teams t[8];
+    Teams tq[4];
+    Quaterfinal q;
+    match m;
+    for(int i=0;i<8;i++){
+        t[i].getname();
+    }
+    for(int i=0;i<8;i=i+2){
+    q.showmatches(t[i],t[i+1]);
+    }
+    int j=0;
+    for(int i=0;i<8;i=i+2){
+
+    int k=m.matches(i, t[i], t[i+1]);
+
+        tq[j]=t[k];
+        j++;
+
+    }
+
+   cout<< tq[0].team_name;
+    cout<<tq[1].team_name;
+    cout<<tq[2].team_name;
+    cout<<tq[3].team_name;
+}
