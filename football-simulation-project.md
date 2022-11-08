@@ -1,22 +1,28 @@
 ```cpp
 // Football Knockout tournament simulation project
-#include <iostream>
+#include <bits/stdc++.h>
+#include <fstream>
 using namespace std;
 class Teams
 {
 public:
     string team_name;
+    int  team_score;
 
-public:
     void getname()
     {
         cin >> team_name;
+    }
+    void getscore(){
+        cin>>team_score;
+        return;
     }
     operator string()
     {
         return team_name;
     }
 };
+
 class match : public Teams
 {
 public:
@@ -25,6 +31,7 @@ public:
     virtual int matches(int i, Teams t1, Teams t2) = 0;
     virtual void showmatches(Teams t1, Teams t2) = 0;
 };
+
 class Quarterfinal : public match
 {
 protected:
@@ -43,9 +50,9 @@ public:
         cout << "\n";
         cout << "                            Quarterfinal " << k << " starts" << endl;
         cout << "                                Enter the no. of goals scored by " << t1.team_name << endl;
-        cin >> team_score1;
+        t1.getscore();
         cout << "                               Enter the no. of goals scored by " << t2.team_name << endl;
-        cin >> team_score2;
+        t2.getscore;
         if (team_score1 > team_score2)
         {
             cout << "                         " << t1.team_name
@@ -86,6 +93,7 @@ public:
         }
     }
 };
+
 class Semifinals : public match
 {
 protected:
@@ -145,6 +153,7 @@ public:
         }
     }
 };
+
 class Final : public match
 {
 public:
@@ -198,6 +207,32 @@ public:
     }
 };
 
+void leaderboard()
+{
+    cout<<" \n This is leaderboard function \n";
+}
+void programmenu()
+{
+    int expression = 1;
+    while (expression != 0)
+    {
+        cout << "MENU: \n 1. Continue with next match \n 2. Current Leaderboard \n 0. Exit program" << endl;
+        cin >> expression;
+        switch (expression)
+        {
+        case 1:
+            break;
+
+        case 2:
+            leaderboard();
+            break;
+
+        case 0:
+            return;
+        }
+    }
+}
+
 int main()
 {
     cout << "---------------------------------------------- KNOCKOUT TOURNAMENT ------------------------------------" << endl;
@@ -210,7 +245,7 @@ int main()
     Quarterfinal q;
     Semifinals s;
     Final f;
-    cout << "                           Enter the 8 teams that will participate in the knockout tournament                    " << endl;
+    cout << "                           Enter the 8 teams that will participate in the knockout tournament                       " << endl;
     for (int i = 0; i < 8; i++)
     {
         tq[i].getname();
@@ -225,6 +260,7 @@ int main()
         int k = q.matches(i, tq[i], tq[i + 1]);
 
         ts[j] = tq[k];
+        programmenu();
         j++;
     }
     cout << endl
@@ -240,6 +276,7 @@ int main()
         int k = s.matches(i, ts[i], ts[i + 1]);
 
         tf[l] = tq[k];
+        programmenu();
         l++;
     }
     cout << "\n \n";
@@ -247,6 +284,7 @@ int main()
     f.showmatches(tf[i], tf[i + 1]);
     int k = f.matches(i, tf[i], tf[i + 1]);
     string finalteam = tf[k];
-    cout << finalteam << " " << endl;
+    programmenu();
 }
+
 ```
