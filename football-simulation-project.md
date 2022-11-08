@@ -1,5 +1,5 @@
 ```cpp
-// Football Knockout tournament simulation project
+// Football tournament simualation
 #include <bits/stdc++.h>
 #include <fstream>
 using namespace std;
@@ -7,14 +7,15 @@ class Teams
 {
 public:
     string team_name;
-    int  team_score;
+    int team_score;
 
     void getname()
     {
         cin >> team_name;
     }
-    void getscore(){
-        cin>>team_score;
+    void getscore()
+    {
+        cin >> team_score;
         return;
     }
     operator string()
@@ -28,8 +29,11 @@ class match : public Teams
 public:
     int team_score1;
     int team_score2;
-    virtual int matches(int i, Teams t1, Teams t2) = 0;
-    virtual void showmatches(Teams t1, Teams t2) = 0;
+    virtual int matches(int i, Teams &t1, Teams &t2) = 0;
+    virtual void showmatches(Teams t1, Teams t2)
+    {
+        cout << "this is the match";
+    }
 };
 
 class Quarterfinal : public match
@@ -45,22 +49,22 @@ public:
         cout << t1.team_name << " v/s " << t2.team_name << endl;
         l++;
     }
-    int matches(int i, Teams t1, Teams t2)
+    int matches(int i, Teams &t1, Teams &t2)
     {
         cout << "\n";
         cout << "                            Quarterfinal " << k << " starts" << endl;
         cout << "                                Enter the no. of goals scored by " << t1.team_name << endl;
         t1.getscore();
         cout << "                               Enter the no. of goals scored by " << t2.team_name << endl;
-        t2.getscore;
-        if (team_score1 > team_score2)
+        t2.getscore();
+        if (t1.team_score > t2.team_score)
         {
             cout << "                         " << t1.team_name
                  << " has won Quarterfinal " << k << endl;
             k++;
             return i;
         }
-        else if (team_score1 == team_score2)
+        else if (t1.team_score == t2.team_score)
         {
             cout << "                        "
                  << "Quarterfinal " << k << " is draw " << endl;
@@ -73,6 +77,7 @@ public:
             {
                 cout << "                     " << t1.team_name
                      << " has won Quarterfinal " << k << endl;
+                     t1.team_score++;
                 k++;
                 return i;
             }
@@ -81,6 +86,7 @@ public:
 
                 cout << "                     " << t2.team_name
                      << " has won Quarterfinal " << k << endl;
+                   t2.team_score++;  
                 k++;
                 return i + 1;
             }
@@ -107,23 +113,23 @@ public:
         cout << t1.team_name << " v/s " << t2.team_name << endl;
         l++;
     }
-    int matches(int i, Teams t1, Teams t2)
+    int matches(int i, Teams &t1, Teams &t2)
     {
         cout << endl;
         cout << "                            Semifinal " << k << " starts   " << endl;
         cout << "                                Enter the no. of goals scored by " << t1.team_name << endl
              << endl;
-        cin >> team_score1;
+        t1.getscore();
         cout << "                               Enter the no. of goals scored by " << t2.team_name << endl
              << endl;
-        cin >> team_score2;
-        if (team_score1 > team_score2)
+        t2.getscore();
+        if (t1.team_score > t2.team_score)
         {
             cout << "                         " << t1.team_name << " has won Semifinal " << k << endl;
             k++;
             return i;
         }
-        else if (team_score1 == team_score2)
+        else if (t1.team_score == t2.team_score)
         {
             cout << "                        "
                  << " Semifinal " << k << " is draw " << endl;
@@ -164,22 +170,22 @@ public:
              << "v/s"
              << " " << t2.team_name << endl;
     }
-    int matches(int i, Teams t1, Teams t2)
+    int matches(int i, Teams &t1, Teams &t2)
     {
         cout << "\n";
         cout << "                            Final starts   " << endl;
         cout << "                                Enter the no of goals scored by " << t1.team_name << '\n'
              << endl;
-        cin >> team_score1;
+        t1.getscore();
         cout << "                               Enter the no of goals scored by " << t2.team_name << '\n'
              << endl;
-        cin >> team_score2;
-        if (team_score1 > team_score2)
+        t2.getscore();
+        if (t1.team_score > t2.team_score)
         {
             cout << "                         " << t1.team_name << " has won Final" << endl;
             return i;
         }
-        else if (team_score1 == team_score2)
+        else if (t1.team_score == t2.team_score)
         {
             cout << "                        "
                  << " Final is draw " << endl;
@@ -209,26 +215,33 @@ public:
 
 void leaderboard()
 {
-    cout<<" \n This is leaderboard function \n";
+    ifstream fin;
+    fin.open("sample.txt", ios::in);
+    char ch;
+    while (!fin.eof())
+    {
+        ch = fin.get();
+        cout << ch;
+    }
 }
 void programmenu()
 {
-    int expression = 1;
-    while (expression != 0)
+    int expression = -1;
+    cout << "MENU: \n 1. Continue with next match \n 2. Current Leaderboard \n 0. Exit program" << endl;
+    while (expression != 1)
     {
-        cout << "MENU: \n 1. Continue with next match \n 2. Current Leaderboard \n 0. Exit program" << endl;
+        cout << "Enter the choice: ";
         cin >> expression;
         switch (expression)
         {
         case 1:
             break;
-
         case 2:
             leaderboard();
             break;
 
         case 0:
-            return;
+            exit(0);
         }
     }
 }
@@ -242,9 +255,12 @@ int main()
     Teams tq[8];
     Teams ts[4];
     Teams tf[2];
+    match *m;
     Quarterfinal q;
+    m = &q;
     Semifinals s;
     Final f;
+    ofstream fout;
     cout << "                           Enter the 8 teams that will participate in the knockout tournament                       " << endl;
     for (int i = 0; i < 8; i++)
     {
@@ -252,39 +268,64 @@ int main()
     }
     for (int i = 0; i < 8; i = i + 2)
     {
-        q.showmatches(tq[i], tq[i + 1]);
+        m->showmatches(tq[i], tq[i + 1]);
     }
     int j = 0;
+    int e = 1;
+    fout << "Quarterfinals starts" << endl
+         << endl;
     for (int i = 0; i < 8; i = i + 2)
     {
+        fout.open("sample.txt", ios::app);
         int k = q.matches(i, tq[i], tq[i + 1]);
-
+        fout << "Quarterfinal " << e << " ->" << tq[i].team_name << "  V/S " << tq[i + 1].team_name << endl;
+        fout << tq[i].team_name << " SCORE: " << tq[i].team_score << endl;
+        fout << tq[i + 1].team_name << " SCORE: " << tq[i + 1].team_score << endl;
+        fout << "Quarterfinal " << e << " won by " << tq[k].team_name << endl;
+        fout.close();
         ts[j] = tq[k];
         programmenu();
         j++;
-    }
-    cout << endl
-         << endl;
-    for (int i = 0; i < 4; i = i + 2)
-    {
-        s.showmatches(ts[i], ts[i + 1]);
-    }
-    int l = 0;
-    for (int i = 0; i < 4; i = i + 2)
-    {
-
-        int k = s.matches(i, ts[i], ts[i + 1]);
-
-        tf[l] = tq[k];
-        programmenu();
-        l++;
-    }
-    cout << "\n \n";
-    int i = 0;
-    f.showmatches(tf[i], tf[i + 1]);
-    int k = f.matches(i, tf[i], tf[i + 1]);
-    string finalteam = tf[k];
-    programmenu();
+        e++;
+ }
+cout << endl
+     << endl;
+for (int i = 0; i < 4; i = i + 2)
+{
+    s.showmatches(ts[i], ts[i + 1]);
 }
+int l = 0;
+int d = 1;
+fout<<"Semifinals starts"<<endl<<endl;
+for (int i = 0; i < 4; i = i + 2)
+{
+    fout.open("sample.txt", ios::app);
+    int k = s.matches(i, ts[i], ts[i + 1]);
+
+    fout << "Semifinal " << d << " ->" << ts[i].team_name << "  V/S " << ts[i + 1].team_name << endl;
+    fout << ts[i].team_name << " SCORE: " << ts[i].team_score << endl;
+    fout << ts[i + 1].team_name << " SCORE: " << ts[i + 1].team_score << endl;
+    fout << "Semifinal " << d << " won by " << ts[k].team_name << endl;
+    fout.close();
+    tf[l] = tq[k];
+     programmenu();
+    l++;
+    d++;
+}
+cout << "\n \n";
+int i = 0;
+f.showmatches(tf[i], tf[i + 1]);
+fout.open("sample.txt", ios::app);
+int k = f.matches(i, tf[i], tf[i + 1]);
+string finalteam = tf[k];
+fout << "Final starts" << endl
+     << endl;
+fout << "Final "
+     << " ->" << tf[i].team_name << "  V/S " << tf[i + 1].team_name << endl;
+fout << tf[i].team_name << " SCORE: " << tf[i].team_score << endl;
+fout << tf[i + 1].team_name << " SCORE: " << tf[i + 1].team_score << endl;
+fout << "Final "
+     << " won by " << finalteam << endl;
+fout.close();
 
 ```
