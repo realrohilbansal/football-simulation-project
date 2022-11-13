@@ -64,41 +64,37 @@ public:
             k++;
             return i;
         }
-        else if (t1.team_score == t2.team_score)
-        {
-            cout << "                        "
-                 << "Quarterfinal " << k << " is draw " << endl;
-            cout << "                         Now to make one team winner(knockout tournament) we can increase the score of one team by 1" << endl;
-            cout << "                         press any int number except 0 to increase score of team " << t1.team_name << endl;
-            cout << "                         press 0 to increase score of team " << t2.team_name << endl;
-            int w;
-            cin >> w;
-            if (w)
-            {
-                cout << "                     " << t1.team_name
-                     << " has won Quarterfinal " << k << endl;
-                     t1.team_score++;
-                k++;
-                return i;
-            }
-            else
-            {
-
-                cout << "                     " << t2.team_name
-                     << " has won Quarterfinal " << k << endl;
-                   t2.team_score++;  
-                k++;
-                return i + 1;
-            }
-        }
-        else
+        else if(t1.team_score<t2.team_score)
         {
             cout << "                         " << t2.team_name << " has won Quarterfinal " << k << endl;
             k++;
             return i + 1;
         }
+        else {
+            try{
+                            throw "Quarterfinal match is drawn";
+            }
+            catch (const char *s){
+                cout<<s<<endl;
+            }
+            cout<<"press 1 to make "<<t1.team_name<<" qualify for next round"<<endl;
+             cout<<"press 0 to make "<<t2.team_name<<" qualify for next round"<<endl;
+             int k;
+             cin>>k;
+             if(k==1){
+                cout<<"                      "<<t1.team_name<< "has won Quartefinal "<< k<<endl;
+                return i;
+             }
+             else{
+                cout<<"                      "<<t2.team_name<< "has won Quartefinal "<< k<<endl;
+                return i+1;
+             }
+            
+        }
+        
     }
 };
+
 
 class Semifinals : public match
 {
@@ -129,33 +125,33 @@ public:
             k++;
             return i;
         }
-        else if (t1.team_score == t2.team_score)
+        else if (t1.team_score <t2.team_score)
         {
-            cout << "                        "
-                 << " Semifinal " << k << " is draw " << endl;
-            cout << "                         Now to make one team winner(knockout tournament) we can increase the score of one team by 1" << endl;
-            cout << "                         press any int number except 0 to increase score of team " << t1.team_name << endl;
-            cout << "                         press 0 to increase score of team " << t2.team_name << endl;
-            int w;
-            cin >> w;
-            if (w)
-            {
-                cout << "                     " << t1.team_name << " has won  Semifinal " << k << endl;
-                k++;
-                return i;
-            }
-            else
-            {
-                cout << "                     " << t2.team_name << " has won Semifinal " << k << endl;
-                k++;
-                return i + 1;
-            }
-        }
-        else
-        {
+            
             cout << "                         " << t2.team_name << " has won  Semifinal  " << k << endl;
             k++;
             return i + 1;
+        }
+       else {
+            try{
+                            throw "Semifinal match is drawn";
+            }
+            catch (const char *s){
+                cout<<s<<endl;
+            }
+            cout<<"press 1 to make "<<t1.team_name<<" qualify for next round"<<endl;
+             cout<<"press 0 to make "<<t2.team_name<<" qualify for next round"<<endl;
+             int k;
+             cin>>k;
+             if(k==1){
+                cout<<"                      "<<t1.team_name<< "has won semifinal "<< k<<endl;
+                return i;
+             }
+             else{
+                cout<<"                      "<<t2.team_name<< "has won semifinal "<< k<<endl;
+                return i+1;
+             }
+            
         }
     }
 };
@@ -185,32 +181,37 @@ public:
             cout << "                         " << t1.team_name << " has won Final" << endl;
             return i;
         }
-        else if (t1.team_score == t2.team_score)
+        else if (t1.team_score < t2.team_score)
         {
-            cout << "                        "
-                 << " Final is draw " << endl;
-            cout << "                         Now to make one team winner(knockout tournament) we can increase the score of one team by 1" << endl;
-            cout << "                         press any int number except 0 to increase score of team " << t1.team_name << endl;
-            cout << "                         press 0 to increase score of team " << t2.team_name << endl;
-            int w;
-            cin >> w;
-            if (w)
-            {
-                cout << "                     " << t1.team_name << " has won  Final  " << endl;
-                return i;
-            }
-            else
-            {
-                cout << "                     " << t2.team_name << " has won  Final   " << endl;
-                return i + 1;
-            }
-        }
-        else
-        {
+           
             cout << "                         " << t2.team_name << " has won  Final  " << endl;
             return i + 1;
         }
+        else
+        {
+         try{
+                            throw "final match is drawn";
+            }
+            catch (const char *s){
+                cout<<s<<endl;
+            }
+            cout<<"press 1 to make "<<t1.team_name<<" won final"<<endl;
+             cout<<"press 0 to make "<<t2.team_name<<" won final"<<endl;
+             int k;
+             cin>>k;
+             if(k==1){
+                cout<<"                      "<<t1.team_name<< "has won Final "<< k<<endl;
+                return i;
+             }
+             else{
+                cout<<"                      "<<t2.team_name<< "has won Final "<< k<<endl;
+                return i+1;
+             }
+            
+
+        }
     }
+    ~Final(){}
 };
 
 void leaderboard()
@@ -259,7 +260,7 @@ int main()
     Quarterfinal q;
     m = &q;
     Semifinals s;
-    Final f;
+    Final *f=new Final;
     ofstream fout;
     cout << "                           Enter the 8 teams that will participate in the knockout tournament                       " << endl;
     for (int i = 0; i < 8; i++)
@@ -314,9 +315,9 @@ for (int i = 0; i < 4; i = i + 2)
 }
 cout << "\n \n";
 int i = 0;
-f.showmatches(tf[i], tf[i + 1]);
+f->showmatches(tf[i], tf[i + 1]);
 fout.open("sample.txt", ios::app);
-int k = f.matches(i, tf[i], tf[i + 1]);
+int k = f->matches(i, tf[i], tf[i + 1]);
 string finalteam = tf[k];
 fout << "Final starts" << endl
      << endl;
@@ -327,5 +328,6 @@ fout << tf[i + 1].team_name << " SCORE: " << tf[i + 1].team_score << endl;
 fout << "Final "
      << " won by " << finalteam << endl;
 fout.close();
-
+ leaderboard();
+}
 ```
