@@ -64,37 +64,39 @@ public:
             k++;
             return i;
         }
-        else if(t1.team_score<t2.team_score)
+        else if (t1.team_score < t2.team_score)
         {
             cout << "                         " << t2.team_name << " has won Quarterfinal " << k << endl;
             k++;
             return i + 1;
         }
-        else {
-            try{
-                            throw "Quarterfinal match is drawn";
+        else
+        {
+            try
+            {
+                throw "Quarterfinal match is drawn";
             }
-            catch (const char *s){
-                cout<<s<<endl;
+            catch (const char *s)
+            {
+                cout << s << endl;
             }
-            cout<<"press 1 to make "<<t1.team_name<<" qualify for next round"<<endl;
-             cout<<"press 0 to make "<<t2.team_name<<" qualify for next round"<<endl;
-             int k;
-             cin>>k;
-             if(k==1){
-                cout<<"                      "<<t1.team_name<< "has won Quartefinal "<< k<<endl;
+            cout << "press 1 to make " << t1.team_name << " qualify for next round" << endl;
+            cout << "press 0 to make " << t2.team_name << " qualify for next round" << endl;
+            int k;
+            cin >> k;
+            if (k == 1)
+            {
+                cout << "                      " << t1.team_name << "has won Quartefinal " << k << endl;
                 return i;
-             }
-             else{
-                cout<<"                      "<<t2.team_name<< "has won Quartefinal "<< k<<endl;
-                return i+1;
-             }
-            
+            }
+            else
+            {
+                cout << "                      " << t2.team_name << "has won Quartefinal " << k << endl;
+                return i + 1;
+            }
         }
-        
     }
 };
-
 
 class Semifinals : public match
 {
@@ -125,33 +127,37 @@ public:
             k++;
             return i;
         }
-        else if (t1.team_score <t2.team_score)
+        else if (t1.team_score < t2.team_score)
         {
-            
+
             cout << "                         " << t2.team_name << " has won  Semifinal  " << k << endl;
             k++;
             return i + 1;
         }
-       else {
-            try{
-                            throw "Semifinal match is drawn";
+        else
+        {
+            try
+            {
+                throw "Semifinal match is drawn";
             }
-            catch (const char *s){
-                cout<<s<<endl;
+            catch (const char *s)
+            {
+                cout << s << endl;
             }
-            cout<<"press 1 to make "<<t1.team_name<<" qualify for next round"<<endl;
-             cout<<"press 0 to make "<<t2.team_name<<" qualify for next round"<<endl;
-             int k;
-             cin>>k;
-             if(k==1){
-                cout<<"                      "<<t1.team_name<< "has won semifinal "<< k<<endl;
+            cout << "press 1 to make " << t1.team_name << " qualify for next round" << endl;
+            cout << "press 0 to make " << t2.team_name << " qualify for next round" << endl;
+            int k;
+            cin >> k;
+            if (k == 1)
+            {
+                cout << "                      " << t1.team_name << "has won semifinal " << k << endl;
                 return i;
-             }
-             else{
-                cout<<"                      "<<t2.team_name<< "has won semifinal "<< k<<endl;
-                return i+1;
-             }
-            
+            }
+            else
+            {
+                cout << "                      " << t2.team_name << "has won semifinal " << k << endl;
+                return i + 1;
+            }
         }
     }
 };
@@ -183,35 +189,37 @@ public:
         }
         else if (t1.team_score < t2.team_score)
         {
-           
+
             cout << "                         " << t2.team_name << " has won  Final  " << endl;
             return i + 1;
         }
         else
         {
-         try{
-                            throw "final match is drawn";
+            try
+            {
+                throw "final match is drawn";
             }
-            catch (const char *s){
-                cout<<s<<endl;
+            catch (const char *s)
+            {
+                cout << s << endl;
             }
-            cout<<"press 1 to make "<<t1.team_name<<" won final"<<endl;
-             cout<<"press 0 to make "<<t2.team_name<<" won final"<<endl;
-             int k;
-             cin>>k;
-             if(k==1){
-                cout<<"                      "<<t1.team_name<< "has won Final "<< k<<endl;
+            cout << "press 1 to make " << t1.team_name << " won final" << endl;
+            cout << "press 0 to make " << t2.team_name << " won final" << endl;
+            int k;
+            cin >> k;
+            if (k == 1)
+            {
+                cout << "                      " << t1.team_name << "has won Final " << k << endl;
                 return i;
-             }
-             else{
-                cout<<"                      "<<t2.team_name<< "has won Final "<< k<<endl;
-                return i+1;
-             }
-            
-
+            }
+            else
+            {
+                cout << "                      " << t2.team_name << "has won Final " << k << endl;
+                return i + 1;
+            }
         }
     }
-    ~Final(){}
+    ~Final() {}
 };
 
 void leaderboard()
@@ -249,6 +257,7 @@ void programmenu()
 
 int main()
 {
+    cout << "\n\n\n\n";
     cout << "---------------------------------------------- KNOCKOUT TOURNAMENT ------------------------------------" << endl;
     cout << "                                   This tournament will consist of 8 Teams                              " << endl;
     cout << "                       Their will be total of 7 matches i.e 4 Quarterfinals , 2 Semifinals and a Final              " << endl;
@@ -260,7 +269,7 @@ int main()
     Quarterfinal q;
     m = &q;
     Semifinals s;
-    Final *f=new Final;
+    Final *f = new Final;
     ofstream fout;
     cout << "                           Enter the 8 teams that will participate in the knockout tournament                       " << endl;
     for (int i = 0; i < 8; i++)
@@ -288,46 +297,47 @@ int main()
         programmenu();
         j++;
         e++;
- }
-cout << endl
-     << endl;
-for (int i = 0; i < 4; i = i + 2)
-{
-    s.showmatches(ts[i], ts[i + 1]);
-}
-int l = 0;
-int d = 1;
-fout<<"Semifinals starts"<<endl<<endl;
-for (int i = 0; i < 4; i = i + 2)
-{
-    fout.open("sample.txt", ios::app);
-    int k = s.matches(i, ts[i], ts[i + 1]);
+    }
+    cout << endl
+         << endl;
+    for (int i = 0; i < 4; i = i + 2)
+    {
+        s.showmatches(ts[i], ts[i + 1]);
+    }
+    int l = 0;
+    int d = 1;
+    fout << "Semifinals starts" << endl
+         << endl;
+    for (int i = 0; i < 4; i = i + 2)
+    {
+        fout.open("sample.txt", ios::app);
+        int k = s.matches(i, ts[i], ts[i + 1]);
 
-    fout << "Semifinal " << d << " ->" << ts[i].team_name << "  V/S " << ts[i + 1].team_name << endl;
-    fout << ts[i].team_name << " SCORE: " << ts[i].team_score << endl;
-    fout << ts[i + 1].team_name << " SCORE: " << ts[i + 1].team_score << endl;
-    fout << "Semifinal " << d << " won by " << ts[k].team_name << endl;
+        fout << "Semifinal " << d << " ->" << ts[i].team_name << "  V/S " << ts[i + 1].team_name << endl;
+        fout << ts[i].team_name << " SCORE: " << ts[i].team_score << endl;
+        fout << ts[i + 1].team_name << " SCORE: " << ts[i + 1].team_score << endl;
+        fout << "Semifinal " << d << " won by " << ts[k].team_name << endl;
+        fout.close();
+        tf[l] = tq[k];
+        programmenu();
+        l++;
+        d++;
+    }
+    cout << "\n \n";
+    int i = 0;
+    f->showmatches(tf[i], tf[i + 1]);
+    fout.open("sample.txt", ios::app);
+    int k = f->matches(i, tf[i], tf[i + 1]);
+    string finalteam = tf[k];
+    fout << "Final starts" << endl
+         << endl;
+    fout << "Final "
+         << " ->" << tf[i].team_name << "  V/S " << tf[i + 1].team_name << endl;
+    fout << tf[i].team_name << " SCORE: " << tf[i].team_score << endl;
+    fout << tf[i + 1].team_name << " SCORE: " << tf[i + 1].team_score << endl;
+    fout << "Final "
+         << " won by " << finalteam << endl;
     fout.close();
-    tf[l] = tq[k];
-     programmenu();
-    l++;
-    d++;
-}
-cout << "\n \n";
-int i = 0;
-f->showmatches(tf[i], tf[i + 1]);
-fout.open("sample.txt", ios::app);
-int k = f->matches(i, tf[i], tf[i + 1]);
-string finalteam = tf[k];
-fout << "Final starts" << endl
-     << endl;
-fout << "Final "
-     << " ->" << tf[i].team_name << "  V/S " << tf[i + 1].team_name << endl;
-fout << tf[i].team_name << " SCORE: " << tf[i].team_score << endl;
-fout << tf[i + 1].team_name << " SCORE: " << tf[i + 1].team_score << endl;
-fout << "Final "
-     << " won by " << finalteam << endl;
-fout.close();
- leaderboard();
+    leaderboard();
 }
 ```
